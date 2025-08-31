@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALQUIPC · Facturación</title>
+  <meta name="description" content="Aplicativo de facturación ALQUIPC con flujo en dos pasos: identidad y alquiler.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="wrap">
+      <h1>ALQUIPC</h1>
+      <p class="sub">Alquiler de portátiles por días · Flujo en dos pasos</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav class="pasos" aria-label="Progreso">
+      <ol>
+        <li class="paso activo" id="paso-1-tag">1. Identificación</li>
+        <li class="paso" id="paso-2-tag">2. Detalles de alquiler</li>
+      </ol>
+      <div id="usuario-mini" class="usuario-mini oculto">
+        <span id="usuario-mini-texto">—</span>
+        <button id="btn-editar-identidad" class="btn btn-sm">Editar datos</button>
+      </div>
+    </nav>
+
+    <section id="paso-1" class="tarjeta">
+      <h2>Identificación del cliente</h2>
+      <form id="form-identidad" novalidate>
+        <div class="grid">
+          <div class="campo">
+            <label for="nombre">Nombre completo <span class="req">*</span></label>
+            <input id="nombre" name="nombre" type="text" required placeholder="Ej: Luis Fernando">
+            <small class="ayuda">Mínimo 3 letras. Solo letras y espacios.</small>
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono <span class="req">*</span></label>
+            <input id="telefono" name="telefono" type="tel" required placeholder="Ej: 3001234567" inputmode="numeric">
+            <small class="ayuda">Solo números (7-10 dígitos).</small>
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div class="campo">
+            <label for="email">Correo electrónico <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required placeholder="ejemplo@correo.com">
+            <small class="ayuda">Debe tener @ y dominio.</small>
+            <p class="error" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="acciones">
+          <button type="submit" class="btn primario">Continuar</button>
+        </div>
+      </form>
+    </section>
+
+     <section id="paso-2" class="tarjeta oculto">
+      <h2>Simulador de alquiler</h2>
+      <form id="form-alquiler" novalidate>
+        <div class="grid">
+          <div class="campo">
+            <label for="equipos">Número de equipos <span class="req">*</span></label>
+            <input id="equipos" name="equipos" type="number" min="2" step="1" required placeholder="Mínimo 2">
+            <small class="ayuda">Debe ser 2 o más.</small>
+            <p class="error" aria-live="polite"></p>
+          </div>
+
+          <div class="campo">
+            <label for="dias">Días iniciales <span class="req">*</span></label>
+            <input id="dias" name="dias" type="number" min="1" step="1" required placeholder="Mínimo 1">
+            <small class="ayuda">Días del periodo inicial.</small>
+            <p class="error" aria-live="polite"></p>
+          </div>
+
+          <div class="campo">
+            <label for="dias-adicionales">Días adicionales</label>
+            <input id="dias-adicionales" name="dias-adicionales" type="number" min="0" step="1" value="0">
+            <small class="ayuda">Cada día adicional tiene 2% de descuento (regla simple).</small>
+            <p class="error" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <fieldset class="opciones">
+          <legend>Opción de alquiler</legend>
+          <label class="radio">
+            <input type="radio" name="opcion" value="ciudad" checked>
+            Dentro de la ciudad (precio base)
+          </label>
+          <label class="radio">
+            <input type="radio" name="opcion" value="fuera">
+            Fuera de la ciudad (+5% domicilio)
+          </label>
+          <label class="radio">
+            <input type="radio" name="opcion" value="establecimiento">
+            Dentro del establecimiento (-5%)
+          </label>
+        </fieldset>
+
+        <div class="acciones">
+          <button type="submit" class="btn primario">Calcular total</button>
+          <button type="button" id="btn-limpiar" class="btn">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="resultado" class="tarjeta oculto" aria-live="polite">
+      <h2>Resumen de facturación</h2>
+      <div class="resumen-grid">
+        <div class="item"><span>Id-cliente:</span> <strong id="id-cliente">—</strong></div>
+        <div class="item"><span>Opción:</span> <strong id="opcion-elegida">—</strong></div>
+        <div class="item"><span>Cliente:</span> <strong id="cliente-res">—</strong></div>
+        <div class="item"><span>Teléfono:</span> <strong id="tel-res">—</strong></div>
+        <div class="item"><span>Email:</span> <strong id="mail-res">—</strong></div>
+        <div class="item"><span>Equipos:</span> <strong id="equipos-res">—</strong></div>
+        <div class="item"><span>Días iniciales:</span> <strong id="dias-res">—</strong></div>
+        <div class="item"><span>Días adicionales:</span> <strong id="dias-extra-res">—</strong></div>
+      </div>
+
+      <div class="detalle">
+        <h3>Detalle de cobro</h3>
+        <ul id="lista-detalle" class="lista-detalle"></ul>
+      </div>
+
+      <div class="total">
+        <span>Total a pagar</span>
+        <strong id="total-res">$0</strong>
+      </div>
+      <p class="nota">
+        * De acuerdo con la política ambiental de ALQUIPC, no se imprime recibo. 
+        Este resumen puede copiarse y enviarse por correo al cliente.
+      </p>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="wrap">
+      <small>Luis Quevedo</small>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

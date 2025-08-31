@@ -1,0 +1,119 @@
+:root{
+  --petr: #0f3d3e;    
+  --graf: #2b2b2b;     
+  --humo: #f3f5f7;     
+  --acnt: #ff7a00;   
+  --ok:   #0f8d3e;
+  --err:  #b00020;
+  --card: #ffffff;
+  --bord: #e5e7eb;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--graf);
+  background:linear-gradient(180deg, var(--humo), #ffffff 400px);
+}
+
+.wrap{max-width: 960px; margin: 0 auto; padding: 16px}
+.encabezado{
+  background: var(--petr);
+  color: #fff;
+  padding: 24px 0;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06);
+}
+.encabezado h1{margin:0;font-size: clamp(22px, 4vw, 32px)}
+.encabezado .sub{opacity:.9;margin:.25rem 0 0}
+
+.tarjeta{
+  background: var(--card);
+  border: 1px solid var(--bord);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 18px 0;
+  box-shadow: 0 6px 20px rgba(15,61,62,.06);
+}
+
+h2{margin-top:0}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 800px){
+  .grid{grid-template-columns: 1fr}
+}
+
+.campo label{display:block;font-weight:600;margin-bottom:6px}
+.campo .req{color:var(--acnt)}
+.campo input{
+  width:100%;
+  padding:12px 12px;
+  border:1px solid var(--bord);
+  border-radius:12px;
+  outline:none;
+  font-size:16px;
+  transition: box-shadow .2s ease, border-color .2s ease;
+  background: #fff;
+}
+.campo input:focus{
+  border-color: var(--petr);
+  box-shadow: 0 0 0 4px rgba(15,61,62,.12);
+}
+.ayuda{display:block;color:#6b7280;font-size:12px;margin-top:4px}
+.error{min-height:1em;color:var(--err);font-size:12px;margin:6px 0 0}
+
+.opciones{
+  border:1px dashed var(--bord);
+  border-radius:12px;
+  padding:12px;
+  margin-top:16px;
+}
+.opciones legend{padding: 0 6px; font-weight:700}
+.radio{display:block;margin:8px 0}
+.radio input{margin-right:8px}
+
+.acciones{display:flex; gap:12px; margin-top:16px}
+.btn{
+  appearance:none; border:1px solid var(--bord); background:#fff; color:var(--graf);
+  padding:10px 16px; border-radius:12px; cursor:pointer; font-weight:600;
+}
+.btn:hover{transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.06)}
+.btn.primario{background: var(--acnt); border-color: var(--acnt); color: #fff}
+
+.oculto{display:none}
+
+.resumen-grid{
+  display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px;
+}
+.resumen-grid .item{display:flex; justify-content:space-between; background:#fafafa; border:1px solid var(--bord); border-radius:10px; padding:10px 12px}
+.resumen-grid .item span{opacity:.8}
+
+.lista-detalle{list-style:none; padding-left:0; margin:8px 0}
+.lista-detalle li{display:flex; justify-content:space-between; padding:10px 12px; border-bottom:1px dashed var(--bord)}
+.lista-detalle li:last-child{border-bottom:none}
+
+.total{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top: 8px; padding: 14px 16px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #fff 0%, #fff6f0 100%);
+  border: 1px solid var(--bord);
+  font-size: clamp(18px, 3vw, 22px);
+}
+.total strong{color:var(--petr)}
+
+.pie{padding: 22px 0; text-align:center; color:#6b7280}
+.nota{color:#6b7280; font-size: 13px; margin-top: 8px}
+
+
+.pasos{display:flex; align-items:center; justify-content:space-between; margin:12px 0}
+.pasos ol{list-style:none; display:flex; gap:12px; padding-left:0; margin:0}
+.pasos .paso{background:#eef2f7; border:1px solid var(--bord); padding:6px 10px; border-radius:999px; font-weight:600; opacity:.75}
+.pasos .paso.activo{background:#fff; border-color: var(--acnt); opacity:1}
+
+.usuario-mini{display:flex; align-items:center; gap:8px}
+.btn-sm{padding:6px 10px; border-radius:10px; font-size:14px}
+
