@@ -169,7 +169,8 @@
 
     const subtotalInicial = equipos * dias * PRECIO_BASE;
     const valorAdicionalBruto = equipos * diasExtra * PRECIO_BASE;
-    const porcDescTotalExtra = PORC_DESC_DIA_ADICIONAL * diasExtra;
+    // Limitar el descuento máximo al 20%
+    const porcDescTotalExtra = Math.min(PORC_DESC_DIA_ADICIONAL * diasExtra, 0.20);
     const descuentoDiasExtra = valorAdicionalBruto * porcDescTotalExtra;
     const valorAdicionalNeto = valorAdicionalBruto - descuentoDiasExtra;
 
